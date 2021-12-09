@@ -2,3 +2,7 @@
   background-color: cadetblue;
   transition: all 0.5s ease-in-out; /* need to move to another place to not break because of js*/
 }
+
+.fade {
+  opacity: 0.3;
+}
