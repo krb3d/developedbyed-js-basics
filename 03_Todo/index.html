@@ -28,15 +28,27 @@
       <label for="todo-input" hidden>New element:&nbsp;</label>
       <input type="text" name="todo-input" id="todo-input" />
       <button type="submit" class="todo-button">
-        <i class="fas fa-plus-square"> Add</i>
+        <i class="fas fa-plus-square">&nbsp;Add</i>
       </button>
+      <div class="selector">
+        <select name="todos" id="filter-todo" title="select filter">
+          <option value="all">All</option>
+          <option value="completed">Completed</option>
+          <option value="uncompleted">Uncompleted</option>
+        </select>
+      </div>
     </form>
     <section>
       <div class="todo-container">
         <ul class="todo-list">
           <div class="todo">
             <li>Element 1</li>
-            <button><i class="far fa-trash-alt"> Delete</i></button>
+            <button class="trash-btn">
+              <i class="far fa-trash-alt"> Delete</i>
+            </button>
+            <button class="complete-btn">
+              <i class="fas fa-check"> Checked</i>
+            </button>
           </div>
         </ul>
       </div>

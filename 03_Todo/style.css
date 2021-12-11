@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+/* 
+    Fix for <i> click issue in js doElementButtonsActions()
+    Just remove events from all Font avesome icons
+*/
+.fas,
+.far {
+  pointer-events: none;
+}
+
 body {
   background: linear-gradient(120deg, #f6d365, #fda085);
   color: white;
@@ -49,4 +58,99 @@ form button {
 
 form button:hover {
   filter: invert(100%);
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+}
+
+.selector {
+  margin: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+select {
+  color: #ff6f47;
+  cursor: pointer;
+  padding: 1rem;
+}
+.selector::after {
+  content: "\25BC";
+  position: absolute;
+  background: #ff6f47;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.selector:hover::after {
+  background: white;
+  color: #ff6f47;
+}
+
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-list {
+  min-width: 30%;
+  list-style: georgian;
+}
+
+.todo {
+  margin: 0.5rem;
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.todo li {
+  flex: 1;
+  max-width: 50%;
+}
+
+.todo-item {
+  padding: 0rem 0.5rem;
+}
+
+.trash-btn,
+.complete-btn {
+  cursor: pointer;
+  border: none;
+  padding: 1rem;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.complete-btn {
+  color: darkcyan;
+}
+
+.trash-btn {
+  background-color: crimson;
+  color: white;
+}
+
+.todo-list .completed {
+  opacity: 0.5;
+}
+
+.todo-list .completed li {
+  text-decoration: line-through;
+}
+
+.fall {
+  transform: translateY(8rem) rotateZ(20deg);
+  opacity: 0 !important; /* .todo-list .completed have more weight and will overwrite */
 }
