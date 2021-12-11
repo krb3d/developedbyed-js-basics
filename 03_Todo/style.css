@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(120deg, #f6d365, #fda085);
+  color: white;
+  font-family: Poppins, sans-serif;
+  min-height: 100vh;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+header {
+  font-size: 2rem;
+}
+
+header,
+form {
+  min-height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form input,
+form button {
+  padding: 0.5rem;
+  margin: 0.5rem;
+  font-size: 2rem;
+  border: none;
+  color: darkturquoise;
+  background: white;
+}
+
+form input:focus {
+  outline: dashed darkturquoise;
+}
+
+form button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+form button:hover {
+  filter: invert(100%);
+}
