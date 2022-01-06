@@ -15,7 +15,7 @@ function registerUserFunc(p1, p2) {
   console.log(this, p1, p2);
 }
 
-let register = registerUserFunc; // not invoke
+let register = registerUserFunc; // just set "register" variable, not invoke
 register("a", "b"); // Output: Window a b
 
 let registerBinded = registerUserFunc.bind(eloper); // not invoke
