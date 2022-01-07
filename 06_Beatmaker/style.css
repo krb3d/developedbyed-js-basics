@@ -94,7 +94,7 @@ svg {
 }
 
 .pad {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
 }
 
 .play {
