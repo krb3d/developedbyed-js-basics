@@ -3,6 +3,11 @@ class DrumKit {
     this.pads = document.querySelectorAll(".pad");
     this.playBtn = document.querySelector(".play");
 
+    this.currentKick = "./sounds/kick-classic.wav";
+    this.currentSnare = "./sounds/snare-808.wav";
+    this.currentHihat = "./sounds/hihat-808.wav";
+    this.selects = document.querySelectorAll("select");
+
     this.kickAudio = document.querySelector(".kick-sound");
     this.snareAudio = document.querySelector(".snare-sound");
     this.hihatAudio = document.querySelector(".hihat-sound");
@@ -25,6 +30,7 @@ class DrumKit {
       bar.style.animation = `playTrack 0.3s alternate ease-in-out 2`;
       if (bar.classList.contains("active")) {
         if (bar.classList.contains("kick-pad")) {
+          this.kickAudio.volume = 0.5;
           this.kickAudio.currentTime = 0;
           this.kickAudio.play();
         }
@@ -56,6 +62,22 @@ class DrumKit {
   activePad(event) {
     event.target.classList.toggle("active");
   }
+
+  changeSound(event) {
+    const selectionName = event.target.name;
+    const selectionValue = event.target.value;
+    switch (selectionName) {
+      case "kick-select":
+        this.kickAudio.src = selectionValue;
+        break;
+      case "snare-select":
+        this.snareAudio.src = selectionValue;
+        break;
+      case "hihat-select":
+        this.hihatAudio.src = selectionValue;
+        break;
+    }
+  }
 }
 
 const drumKit = new DrumKit();
@@ -68,5 +90,11 @@ drumKit.pads.forEach((pad) => {
   pad.addEventListener("click", drumKit.activePad);
   pad.addEventListener("animationend", function () {
     this.style.animation = "";
+  });
+});
+
+drumKit.selects.forEach((s) => {
+  s.addEventListener("change", function (e) {
+    drumKit.changeSound(e); // can't use diractly changeSound as callback because this. will be different
   });
 });
