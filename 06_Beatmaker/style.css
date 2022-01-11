@@ -113,6 +113,21 @@ button.mute.active {
   background: green;
 }
 
+.tempo {
+  margin: 3rem;
+  width: 30%;
+  font-size: large;
+}
+.tempo p {
+  text-align: center;
+}
+.tempo-slider {
+  padding: 1rem;
+  margin: 1rem 0rem;
+  width: 100%;
+  cursor: pointer;
+}
+
 @keyframes playTrack {
   from {
     transform: scale(1);
