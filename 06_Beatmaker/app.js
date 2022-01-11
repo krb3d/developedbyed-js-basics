@@ -16,6 +16,11 @@ class DrumKit {
     this.bpm = 180;
 
     this.loop = undefined;
+
+    this.muteBtn = document.querySelectorAll(".mute");
+    this.muteKick = false;
+    this.muteSnare = false;
+    this.muteHihat = false;
   }
 
   repeat() {
@@ -29,16 +34,16 @@ class DrumKit {
     activeBars.forEach((bar) => {
       bar.style.animation = `playTrack 0.3s alternate ease-in-out 2`;
       if (bar.classList.contains("active")) {
-        if (bar.classList.contains("kick-pad")) {
+        if (!this.muteKick && bar.classList.contains("kick-pad")) {
           this.kickAudio.volume = 0.5;
           this.kickAudio.currentTime = 0;
           this.kickAudio.play();
         }
-        if (bar.classList.contains("snare-pad")) {
+        if (!this.muteSnare && bar.classList.contains("snare-pad")) {
           this.snareAudio.currentTime = 0;
           this.snareAudio.play();
         }
-        if (bar.classList.contains("hihat-pad")) {
+        if (!this.muteHihat && bar.classList.contains("hihat-pad")) {
           this.hihatAudio.currentTime = 0;
           this.hihatAudio.play();
         }
@@ -78,6 +83,25 @@ class DrumKit {
         break;
     }
   }
+
+  mute(event) {
+    event.target.classList.toggle("active");
+    let isMuteEnabled = event.target.classList.contains("active");
+
+    const muteIndex = event.target.getAttribute("data-track");
+
+    switch (muteIndex) {
+      case "kick":
+        this.muteKick = isMuteEnabled;
+        break;
+      case "snare":
+        this.muteSnare = isMuteEnabled;
+        break;
+      case "hihat":
+        this.muteHihat = isMuteEnabled;
+        break;
+    }
+  }
 }
 
 const drumKit = new DrumKit();
@@ -96,5 +120,11 @@ drumKit.pads.forEach((pad) => {
 drumKit.selects.forEach((s) => {
   s.addEventListener("change", function (e) {
     drumKit.changeSound(e); // can't use diractly changeSound as callback because this. will be different
+  });
+});
+
+drumKit.muteBtn.forEach((s) => {
+  s.addEventListener("click", function (e) {
+    drumKit.mute(e);
   });
 });
