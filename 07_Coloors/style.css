@@ -41,6 +41,13 @@ svg {
 .color h2 {
   font-size: 2rem;
   cursor: pointer;
+  text-shadow: 0.1rem 0.1rem 0.3rem black;
+}
+
+.color button {
+  padding: 1rem;
+  color: black;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .sliders {
