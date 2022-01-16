@@ -41,7 +41,7 @@ svg {
 .color h2 {
   font-size: 2rem;
   cursor: pointer;
-  text-shadow: 0.1rem 0.1rem 0.3rem black;
+  /*text-shadow: 0.1rem 0.1rem 0.3rem black;*/
 }
 
 .color button {
@@ -54,7 +54,7 @@ svg {
   display: flex;
   flex-direction: column;
   position: absolute;
-  background: yellow;
+  background: darkslategray;
   bottom: 0%;
   padding: 1rem;
   width: 80%;
@@ -62,8 +62,12 @@ svg {
   border-top-left-radius: 1rem;
 
   /* We are adding an adjustmnt class */
+
+  /*
   transform: translateY(100px);
   opacity: 0;
+  */
+
   transition: all 0.5s ease-in-out;
 }
 
@@ -71,7 +75,7 @@ svg {
   opacity: 1;
   transform: translateY(0px);
   pointer-events: all;
-  background: greenyellow;
+  background: lightgray;
 }
 
 .sliders button {
@@ -125,4 +129,17 @@ svg {
   background: none;
   cursor: pointer;
   margin: 2rem 0rem;
+}
+
+/* Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  margin: 1rem 0rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
 }
