@@ -3,16 +3,28 @@ const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll("input[type='range']");
 const currentHexes = document.querySelectorAll(".color h2");
 
+const colorsStorage = [];
+
+sliders.forEach((slider) => {
+  slider.addEventListener("input", hslControls);
+});
+
+colorDivs.forEach((div, index) => {
+  div.addEventListener("change", () => {
+    updateTextUi(index);
+  });
+});
+
 function generateHex() {
   return chroma.random();
 }
 
-function checkTextContrast(color, text) {
-  text.style.color = "lightgray";
+function checkTextContrast(color, textElement) {
+  textElement.style.color = "white";
 
   const luminance = chroma(color).luminance();
   if (luminance > 0.5) {
-    text.style.color = "darkslategray";
+    textElement.style.color = "black";
   }
 }
 
@@ -46,22 +58,84 @@ function colorizeSliders(color, hue, brightnes, saturation) {
 function randomColors() {
   colorDivs.forEach((div, index) => {
     const randomColor = generateHex();
+    colorsStorage[index] = randomColor;
+
     const hexText = div.querySelector("h2");
 
     hexText.innerText = randomColor;
     div.style.background = randomColor;
 
-    // Check for contrast
-    checkTextContrast(randomColor, hexText);
-
     // Initial Colorize Sliders
-    const chromaColor = chroma(randomColor);
     const sliders = div.querySelectorAll(".sliders input");
     const hue = sliders[0];
     const brightnes = sliders[1];
     const saturation = sliders[2];
 
     colorizeSliders(randomColor, hue, brightnes, saturation);
+  });
+
+  [0, 1, 2].forEach((i) => updateTextUi(i));
+  resetInputs();
+}
+
+function hslControls(event) {
+  const target = event.target;
+  const index =
+    target.getAttribute("data-hue") ||
+    target.getAttribute("data-bright") ||
+    target.getAttribute("data-saturation");
+
+  const colorDiv = colorDivs[index];
+
+  let sliderAll = target.parentElement.querySelectorAll("input[type='range']");
+  const hue = sliderAll[0].value;
+  const bright = sliderAll[1].value;
+  const saturation = sliderAll[2].value;
+
+  const oldColor = colorsStorage[index];
+
+  const newColor = chroma(oldColor)
+    .set("hsl.s", saturation)
+    .set("hsl.h", hue)
+    .set("hsl.l", bright);
+
+  colorDiv.style.background = newColor;
+}
+
+function updateTextUi(index) {
+  const colorDiv = colorDivs[index];
+
+  const color = chroma(colorDiv.style.backgroundColor);
+
+  const colorH2 = colorDiv.querySelector("h2");
+  colorH2.innerText = color;
+  checkTextContrast(color, colorH2);
+
+  const icons = colorDiv.querySelectorAll(".controls button");
+  icons.forEach((element) => {
+    checkTextContrast(color, element);
+  });
+}
+
+function resetInputs() {
+  const sliders = document.querySelectorAll('.sliders  input[type="range"]');
+  sliders.forEach((slider, i) => {
+    const sliderIndex =
+      slider.getAttribute("data-hue") ||
+      slider.getAttribute("data-bright") ||
+      slider.getAttribute("data-saturation");
+
+    const colorChroma = chroma(colorsStorage[sliderIndex]);
+
+    if (slider.name === "hue") {
+      slider.value = Math.floor(colorChroma.get("hsl.h"));
+    }
+    if (slider.name === "saturation") {
+      slider.value = colorChroma.get("hsl.s");
+    }
+    if (slider.name === "brightnes") {
+      slider.value = colorChroma.get("hsl.l");
+    }
   });
 }
 
