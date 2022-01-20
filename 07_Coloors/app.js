@@ -2,6 +2,7 @@ const colorDivs = document.querySelectorAll(".color");
 const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll("input[type='range']");
 const currentHexes = document.querySelectorAll(".color h2");
+const popupCopyContainer = document.querySelector(".copy-container");
 
 const colorsStorage = [];
 
@@ -13,6 +14,18 @@ colorDivs.forEach((div, index) => {
   div.addEventListener("change", () => {
     updateTextUi(index);
   });
+});
+
+currentHexes.forEach((hex, index) => {
+  hex.addEventListener("click", () => {
+    copyToClipboard(hex);
+    popupCopyToClipboard(hex);
+  });
+});
+popupCopyContainer.addEventListener("transitionend", () => {
+  const popupBox = popupCopyContainer.children[0];
+  popupCopyContainer.classList.remove("active");
+  popupBox.classList.remove("active");
 });
 
 function generateHex() {
@@ -138,6 +151,25 @@ function resetInputs() {
       slider.value = colorChroma.get("hsl.l");
     }
   });
+}
+
+function copyToClipboard(hex) {
+  const proxy = document.createElement("textarea");
+  proxy.value = hex.innerText;
+  document.body.appendChild(proxy);
+  proxy.select();
+  //document.execCommand("copy"); // Obsolete
+
+  const selection = window.getSelection();
+  navigator.clipboard.writeText(selection.toString());
+
+  document.body.removeChild(proxy);
+}
+
+function popupCopyToClipboard(hex) {
+  const popupBox = popupCopyContainer.children[0];
+  popupCopyContainer.classList.add("active");
+  popupBox.classList.add("active");
 }
 
 randomColors();
