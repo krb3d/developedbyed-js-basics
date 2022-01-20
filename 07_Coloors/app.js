@@ -88,18 +88,19 @@ function hslControls(event) {
   const colorDiv = colorDivs[index];
 
   let sliderAll = target.parentElement.querySelectorAll("input[type='range']");
-  const hue = sliderAll[0].value;
-  const bright = sliderAll[1].value;
-  const saturation = sliderAll[2].value;
+  const hueSlider = sliderAll[0];
+  const brightnesSlider = sliderAll[1];
+  const saturationSlider = sliderAll[2];
 
   const oldColor = colorsStorage[index];
 
   const newColor = chroma(oldColor)
-    .set("hsl.s", saturation)
-    .set("hsl.h", hue)
-    .set("hsl.l", bright);
+    .set("hsl.s", saturationSlider.value)
+    .set("hsl.h", hueSlider.value)
+    .set("hsl.l", brightnesSlider.value);
 
   colorDiv.style.background = newColor;
+  colorizeSliders(newColor, hueSlider, brightnesSlider, saturationSlider);
 }
 
 function updateTextUi(index) {
