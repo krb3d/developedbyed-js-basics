@@ -4,6 +4,11 @@ const sliders = document.querySelectorAll("input[type='range']");
 const currentHexes = document.querySelectorAll(".color h2");
 const popupCopyContainer = document.querySelector(".copy-container");
 
+const adjustBtn = document.querySelectorAll(".adjust");
+const adjustCloseBtn = document.querySelectorAll(".close-adjustment");
+
+const sliderContainers = document.querySelectorAll(".sliders");
+
 const colorsStorage = [];
 
 sliders.forEach((slider) => {
@@ -22,6 +27,19 @@ currentHexes.forEach((hex, index) => {
     popupCopyToClipboard(hex);
   });
 });
+
+adjustBtn.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    toggleAdjustmentPanel(index);
+  });
+});
+
+adjustCloseBtn.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    closeAdjustmentPanel(index);
+  });
+});
+
 popupCopyContainer.addEventListener("transitionend", () => {
   const popupBox = popupCopyContainer.children[0];
   popupCopyContainer.classList.remove("active");
@@ -170,6 +188,13 @@ function popupCopyToClipboard(hex) {
   const popupBox = popupCopyContainer.children[0];
   popupCopyContainer.classList.add("active");
   popupBox.classList.add("active");
+}
+
+function toggleAdjustmentPanel(index) {
+  sliderContainers[index].classList.toggle("active");
+}
+function closeAdjustmentPanel(index) {
+  sliderContainers[index].classList.remove("active");
 }
 
 randomColors();
