@@ -4,12 +4,17 @@ const sliders = document.querySelectorAll("input[type='range']");
 const currentHexes = document.querySelectorAll(".color h2");
 const popupCopyContainer = document.querySelector(".copy-container");
 
+const lockBtn = document.querySelectorAll(".lock");
 const adjustBtn = document.querySelectorAll(".adjust");
 const adjustCloseBtn = document.querySelectorAll(".close-adjustment");
 
 const sliderContainers = document.querySelectorAll(".sliders");
 
 const colorsStorage = [];
+
+generateBtn.addEventListener("click", (event) => {
+  randomColors();
+});
 
 sliders.forEach((slider) => {
   slider.addEventListener("input", hslControls);
@@ -25,6 +30,12 @@ currentHexes.forEach((hex, index) => {
   hex.addEventListener("click", () => {
     copyToClipboard(hex);
     popupCopyToClipboard(hex);
+  });
+});
+
+lockBtn.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    toggleLockClass(button, index);
   });
 });
 
@@ -88,7 +99,13 @@ function colorizeSliders(color, hue, brightnes, saturation) {
 
 function randomColors() {
   colorDivs.forEach((div, index) => {
+    const locked = colorDivs[index].classList.contains("locked");
+    if (locked) {
+      return;
+    }
+
     const randomColor = generateHex();
+
     colorsStorage[index] = randomColor;
 
     const hexText = div.querySelector("h2");
@@ -105,7 +122,10 @@ function randomColors() {
     colorizeSliders(randomColor, hue, brightnes, saturation);
   });
 
-  [0, 1, 2].forEach((i) => updateTextUi(i));
+  colorDivs.forEach((div, i) => {
+    updateTextUi(i);
+  });
+
   resetInputs();
 }
 
@@ -188,6 +208,15 @@ function popupCopyToClipboard(hex) {
   const popupBox = popupCopyContainer.children[0];
   popupCopyContainer.classList.add("active");
   popupBox.classList.add("active");
+}
+
+function toggleLockClass(button, index) {
+  colorDivs[index].classList.toggle("locked");
+
+  const iconTag = lockBtn[index].querySelector("i");
+
+  iconTag.classList.toggle("fa-lock-open");
+  iconTag.classList.toggle("fa-lock");
 }
 
 function toggleAdjustmentPanel(index) {

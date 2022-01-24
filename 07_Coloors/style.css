@@ -20,6 +20,10 @@ svg {
   pointer-events: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .colors {
   min-height: 80vh;
   display: flex;
