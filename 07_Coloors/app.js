@@ -12,6 +12,9 @@ const sliderContainers = document.querySelectorAll(".sliders");
 
 const colorsStorage = [];
 
+// For local storage
+let savedPaletts = [];
+
 generateBtn.addEventListener("click", (event) => {
   randomColors();
 });
@@ -224,6 +227,28 @@ function toggleAdjustmentPanel(index) {
 }
 function closeAdjustmentPanel(index) {
   sliderContainers[index].classList.remove("active");
+}
+
+// Implement Save to palette and LOCAL STORAGE STUFF
+const saveBtn = document.querySelector(".save");
+const submitSave = document.querySelector(".submit-save");
+const closeSave = document.querySelector(".close-save");
+const saveContainer = document.querySelector(".save-container");
+const saveInput = document.querySelector(".save-container input");
+
+// event listeners
+saveBtn.addEventListener("click", openPalette);
+function openPalette(event) {
+  const popup = saveContainer.children[0];
+  saveContainer.classList.add("active");
+  popup.classList.add("active");
+}
+
+closeSave.addEventListener("click", closePalette);
+function closePalette(event) {
+  const popup = saveContainer.children[0];
+  saveContainer.classList.remove("active");
+  popup.classList.remove("active");
 }
 
 randomColors();
