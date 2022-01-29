@@ -139,9 +139,13 @@ function hslControls(event) {
     target.getAttribute("data-bright") ||
     target.getAttribute("data-saturation");
 
+  hslControlsAtIndex(index);
+}
+
+function hslControlsAtIndex(index) {
   const colorDiv = colorDivs[index];
 
-  let sliderAll = target.parentElement.querySelectorAll("input[type='range']");
+  let sliderAll = colorDiv.querySelectorAll("input[type='range']");
   const hueSlider = sliderAll[0];
   const brightnesSlider = sliderAll[1];
   const saturationSlider = sliderAll[2];
@@ -191,6 +195,9 @@ function resetInputs() {
     if (slider.name === "brightnes") {
       slider.value = colorChroma.get("hsl.l");
     }
+  });
+  colorDivs.forEach((div, index) => {
+    hslControlsAtIndex(index);
   });
 }
 
@@ -304,6 +311,7 @@ function savePalette(event) {
       colorDivs[index].style.background = color;
       updateTextUi(index);
     });
+    resetInputs();
   });
 
   // Append to library
@@ -336,6 +344,15 @@ function saveToLocal(palleteObj) {
 
   localPalletes.push(palleteObj);
   localStorage.setItem("palletes", JSON.stringify(localPalletes));
+}
+
+function getFromLocal() {
+  let localPalletes = JSON.parse(localStorage.getItem("palletes"));
+  if (!localPalletes) {
+    localPalletes = [];
+  }
+
+  // regenerate popup
 }
 
 randomColors();
