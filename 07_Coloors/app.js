@@ -274,7 +274,7 @@ function savePalette(event) {
 
   saveToLocal(paletteObj);
 
-  saveInput.value = undefined;
+  saveInput.value = "";
 
   // Generate the palette for the library
   const palette = document.createElement("div");
@@ -295,6 +295,16 @@ function savePalette(event) {
   paletteBtn.classList.add("pick-palette-btn");
   paletteBtn.classList.add(paletteObj.nr);
   paletteBtn.innerText = "Select";
+
+  paletteBtn.addEventListener("click", (e) => {
+    closeLibrary();
+    const paletteIndex = e.target.classList[1]; // weird just-a-number class set in savePalette()
+    savedPaletts[paletteIndex].colors.forEach((color, index) => {
+      colorsStorage[index] = color;
+      colorDivs[index].style.background = color;
+    });
+    updateTextUi();
+  });
 
   // Append to library
   palette.appendChild(title);
