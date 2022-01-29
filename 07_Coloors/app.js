@@ -302,8 +302,8 @@ function savePalette(event) {
     savedPaletts[paletteIndex].colors.forEach((color, index) => {
       colorsStorage[index] = color;
       colorDivs[index].style.background = color;
+      updateTextUi(index);
     });
-    updateTextUi();
   });
 
   // Append to library
