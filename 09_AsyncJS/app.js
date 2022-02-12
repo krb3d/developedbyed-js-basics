@@ -26,3 +26,14 @@ function loginUser(email, password, callback) {
 loginUser("a@b.com", "asdf", (response) => {
   console.log(response);
 });
+
+const button = document.querySelector("button");
+const header = document.querySelector("h1");
+
+button.addEventListener("click", () => {
+  fetch("https://api.adviceslip.com/advice")
+    .then((result) => result.json())
+    .then((data) => {
+      header.innerText = data?.slip?.advice;
+    });
+});
